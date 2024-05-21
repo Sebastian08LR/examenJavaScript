@@ -55,7 +55,7 @@ class GetAllInfoFromAbrigos extends HTMLElement{
                 for (let i = 0; i < 1; i++){
                 console.log();
                 template+= `
-                <article id="first-item">
+                <article class="itemOne" id="first-item">
                     <img src="${response.abrigo[(response.carrito[i].abrigoId)-1].imagen}" alt="">
                     <div class="shop" id="articulo">
                         <h2>Articulo</h2>
@@ -73,9 +73,9 @@ class GetAllInfoFromAbrigos extends HTMLElement{
                         <h2>Subtotal</h2>
                         <p>$ ${(response.abrigo[(response.carrito[i].abrigoId)-1].precio) * response.carrito[i].cantidad}</p>
                     </div>
-                    <a id="cart-icon" href=""><img src="../storage/img/trash.png"></a>
+                    <a id="cart-icon-1"><img src="../storage/img/trash.png"></a>
                 </article>
-                <article id="first-item">
+                <article class="itemTwo" id="first-item">
                     <img src="${response.pantalon[(response.carrito[i+1].pantalonId)-1].imagen}" alt="">
                     <div class="shop" id="articulo">
                         <h2>Articulo</h2>
@@ -93,9 +93,9 @@ class GetAllInfoFromAbrigos extends HTMLElement{
                         <h2>Subtotal</h2>
                         <p>$ ${(response.pantalon[(response.carrito[i+1].pantalonId)-1].precio) * response.carrito[i+1].cantidad}</p>
                     </div>
-                    <a id="cart-icon" href=""><img src="../storage/img/trash.png"></a>
+                    <a id="cart-icon-2"><img src="../storage/img/trash.png"></a>
                 </article>
-                <article id="first-item">
+                <article class="itemThree" id="first-item">
                     <img src="${response.camiseta[(response.carrito[i+2].camisetaId)-1].imagen}" alt="">
                     <div class="shop" id="articulo">
                         <h2>Articulo</h2>
@@ -113,16 +113,26 @@ class GetAllInfoFromAbrigos extends HTMLElement{
                         <h2>Subtotal</h2>
                         <p>$ ${(response.camiseta[(response.carrito[i+2].camisetaId)-1].precio) * response.carrito[i+1].cantidad}</p>
                     </div>
-                    <a id="cart-icon" href=""><img src="../storage/img/trash.png"></a>
+                    <a id="cart-icon-3"><img src="../storage/img/trash.png"></a>
                 </article>
-                <a class="addToCart" image="${response.pantalon[i].imagen} productName="${response.pantalon[i].nombre}" price="${response.pantalon[i].precio}">Agregar</a>
-                     `
+                `
                 }   
             }
                 this.innerHTML = template;
-                const cartIcon = document.getElementById('cart-icon');
                 const addBtn = document.querySelectorAll('.addToCart');
                 const emptyCart = document.getElementById('emptyCart');
+                const deleteItemOne = document.getElementById('cart-icon-1');
+                const deleteItemTwo = document.getElementById('cart-icon-2');
+                const deleteItemThree = document.getElementById('cart-icon-3');
+                deleteItemOne.addEventListener('click', ()=>{
+                    document.querySelector('.itemOne').style.display = 'none'
+                });
+                deleteItemTwo.addEventListener('click', ()=>{
+                    document.querySelector('.itemTwo').style.display = 'none'
+                })
+                deleteItemThree.addEventListener('click', ()=>{
+                    document.querySelector('.itemThree').style.display = 'none'
+                })
                 emptyCart.addEventListener('click', () =>{
                     template = `
                         <h1>EMPTY CART</h1>
@@ -169,92 +179,3 @@ class GetAllInfoFromAbrigos extends HTMLElement{
 
 }
 customElements.define('get-product', GetAllInfoFromAbrigos);
-
-
-
-
-class AlbumGallery extends HTMLElement {
-    constructor() {
-        super();
-    }
-    
-    async connectedCallback() {
-        const loadAlbums = async (searchTerm) => {
-            const formattedSearchTerm = searchTerm.replace(/\s/g, '%20');
-
-            const url = `https://spotify23.p.rapidapi.com/search/?q=${formattedSearchTerm}&type=albums&offset=0&limit=10&numberOfTopResults=5`;
-            const options = {
-                method: 'GET',
-                headers: {
-                    'X-RapidAPI-Key': 'aa5c24bc0fmsh57bb53b3907728dp116f46jsn54b471f1c938',
-                    'X-RapidAPI-Host': 'spotify23.p.rapidapi.com'
-                }
-            };  
-
-            try {
-                const response = await fetch(url, options);
-                const result = await response.json();
-                let templates = '';
-                for (let i = 0; i < Math.min(8, result.albums.items.length); i++) {
-                    if (result.albums.items[i].data && result.albums.items[i].data.coverArt && result.albums.items[i].data.coverArt.sources && result.albums.items[i].data.coverArt.sources.length > 0) {
-                        // First URL from "sources"
-                        const primeraUrl = result.albums.items[i].data.coverArt.sources[0].url;
-                        const uri = result.albums.items[i].data.uri;
-                        const albumName = result.albums.items[i].data.name;
-                        // Extract ID from URI
-                        const id = uri.split(':')[2];
-                        templates += `
-                            <img id="album__${i + 1}" src="${primeraUrl}" alt="" data-id="${id}" data-name="${albumName}" ">
-                        `;
-                    }
-                }
-                this.innerHTML = templates;
-        
-                // Set the addEventLister for each img and extracts the URI saved previously
-                this.querySelectorAll('img').forEach(img => {
-                    img.addEventListener('click', () => {
-                        const id = img.dataset.id;
-                        const myFrame = document.querySelector('.main__frame');
-                        myFrame.setAttribute('uri', `spotify:album:${id}`);
-                        const AlbumTracksComponent = document.querySelector('.trackList');
-                        AlbumTracksComponent.setAttribute('uri', `spotify:album:${id}`);
-                        const MobileMusicReproducer = document.querySelector('.mobileReproducer')
-                        const imgUrl = img.getAttribute('src')
-                        const albumName = img.getAttribute('data-name');
-                        MobileMusicReproducer.setAttribute('url', `${imgUrl}`);
-                        MobileMusicReproducer.setAttribute('name', `${albumName}`);
-                    });
-                });
-            } catch (error) {
-                console.error(error);
-            }
-        };
-
-        // Llama a la función loadAlbums con el término de búsqueda predeterminado
-        loadAlbums('Bad%20Bunny');
-
-        // Agregar evento al botón de búsqueda
-        const searchButton = document.getElementById('searchButton');
-        const searchInput = document.getElementById('searchInput');
-        searchButton.addEventListener('click', () => {
-            const searchTerm = searchInput.value.trim();
-            if (searchTerm !== '') {
-                loadAlbums(searchTerm);
-            }
-        });
-
-        // Agregar evento al input para permitir la búsqueda al presionar Enter
-        searchInput.addEventListener('keypress', (event) => {
-            if (event.key === 'Enter') {
-                const searchTerm = searchInput.value.trim();
-                if (searchTerm !== '') {
-                    loadAlbums(searchTerm);
-                }
-            }
-        });
-    }
-}
-
-customElements.define('album-gallery', AlbumGallery);
-
-
