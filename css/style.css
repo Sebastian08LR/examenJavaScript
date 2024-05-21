@@ -137,9 +137,9 @@ main section article div{
     height: auto;
     flex-direction: column;
     background-color: var(--banner-card-color);
-    border-bottom-left-radius: 24px;
-    border-bottom-right-radius: 24px;
     padding-top: 1svh;
+    border-bottom-left-radius: inherit;
+    border-bottom-right-radius: inherit;
     row-gap: 1svh;
     padding-left: 1.5vw;
 }
@@ -157,9 +157,7 @@ main section article div a{
 }
 
 .shopping-cart-view{
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    grid-template-rows: repeat(6, 1fr);
+    display: flex;
     height: 70svh;
 }
 
@@ -185,11 +183,23 @@ main section article div a{
 }
 
 #first-item{
-    grid-area: 1 / 1 / span 2 / span 7;
-    display: flex;
     position: relative;
+    display: flex;
+    height: 20svh;
+    padding: 0;
+    margin-bottom: 1svh;
 }
-
+#first-item > img{
+    padding: 1vw;
+    height: auto;
+    border-radius: inherit;
+    max-width: 200px;
+}
+#first-item > div{
+    justify-content: center;
+    padding-right: 2vw;
+    
+}
 .shopping-cart-view > article > img{
     padding-left: 1vw;
     border-radius: 2em;
@@ -199,7 +209,7 @@ main section article div a{
     position: absolute;
     object-fit: contain;
     top: 1svh;
-    right: 2vw;
+    right: 1.5vw;
     max-width: 25px;
     max-height: 25px;
 }
@@ -262,6 +272,34 @@ main section article div a{
     padding: 1svh 1vw;
     border-radius: 1em;
 }
+.catalog{
+    display: flex;
+}
+.items{
+    display: flex;
+    gap: 4vw;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.items article{
+    width: 400px;
+    height: max-content;
+}
+.shop{
+    border-radius: 0;
+}
+#lastDiv{
+    border-top-right-radius: inherit;
+    border-bottom-right-radius: inherit;
+}
+#articulo{
+    width: 50%;
+}
+#emptyCart:hover{
+    padding: 1.2svh 1.2vw;
+    transition: 0.3s ease-in-out;
+}
+
 @media (max-width: 800px){
     body{
         padding: 0;
@@ -314,7 +352,8 @@ main section article div a{
         flex-direction: column;
         text-align: center;
         height: 77svh; 
-        min-width: 90vw;
+        min-width: 95vw;
+        justify-content: center;
     }
 
     main section{
@@ -361,5 +400,8 @@ main section article div a{
     #cart-icon{
         top: 1.5svh;
         right: 3vw;
+    }
+    .items article{
+        width: 80vw;
     }
 }

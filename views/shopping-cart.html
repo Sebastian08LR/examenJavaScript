@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
     <link rel="stylesheet" href="../css/style.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <script src="../js/main.js" type="module" defer></script>
 </head>
 <body>
     <aside>
@@ -25,69 +26,10 @@
           <main>
             <h2>Carrito</h2>
             <section class="shopping-cart-view">
-              <article id="first-item">
-                  <img src="https://http2.mlstatic.com/D_NQ_NP_2X_731406-MCO42646277112_072020-F.webp" alt="">
-                  <div>
-                    <h2>Articulo</h2>
-                    <p>Pantalon 01</p>
-                  </div>
-                  <div>
-                    <h2>Cantidad</h2>
-                    <p>2</p>
-                  </div>
-                  <div>
-                    <h2>Precio</h2>
-                    <p>$ 2.500</p>
-                  </div>
-                  <div>
-                    <h2>Subtotal</h2>
-                    <p>$5.000</p>
-                  </div>
-                  <a id="cart-icon" href=""><img src="../storage/img/trash.png"></a>
-                </article>
-                <article id="second-item">
-                  <img src="https://http2.mlstatic.com/D_NQ_NP_2X_904140-MCO51843801912_102022-F.webp" alt="">
-                  <div>
-                    <h2>Articulo</h2>
-                    <p>Abrigo 02</p>
-                  </div>
-                  <div>
-                    <h2>Cantidad</h2>
-                    <p>2</p>
-                  </div>
-                  <div>
-                    <h2>Precio</h2>
-                    <p>$ 2.000</p>
-                  </div>
-                  <div>
-                    <h2>Subtotal</h2>
-                    <p>$4.000</p>
-                  </div>
-                  <a id="cart-icon" href=""><img src="../storage/img/trash.png"></a>
-                </article>
-                <article id="third-item">
-                  <img src="https://http2.mlstatic.com/D_NQ_NP_2X_995623-MCO70722158553_072023-F.webp" alt="">
-                  <div>
-                    <h2>Articulo  </h2>
-                    <p>Camiseta 03</p>
-                  </div>
-                  <div>
-                    <h2>Cantidad</h2>
-                    <p>1</p>
-                  </div>
-                  <div>
-                    <h2>Precio</h2>
-                    <p>$ 2.500</p>
-                  </div>
-                  <div>
-                    <h2>Subtotal</h2>
-                    <p>$2.500</p>
-                  </div>
-                  <a id="cart-icon" href=""><img src="../storage/img/trash.png"></a>
-                </article>
+                <get-product class="itemsCart" prodctype="shoppingCart"></get-product>
         </section>
         <section class="cart-actions">
-          <a href="">Vaciar Carrito</a>
+          <a id="emptyCart">Vaciar Carrito</a>
           <div class="pay">
             <div>
               <p>Total</p>
